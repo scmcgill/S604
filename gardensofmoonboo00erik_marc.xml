@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record xmlns="http://www.loc.gov/MARC21/slim">
+  <leader>01018cam a2200301M  4500</leader>
+  <controlfield tag="001">ocn474245614</controlfield>
+  <controlfield tag="003">OCoLC</controlfield>
+  <controlfield tag="005">20100615205743.0</controlfield>
+  <controlfield tag="008">091206s2005    nyu           000 f eng d</controlfield>
+  <datafield tag="040" ind1=" " ind2=" ">
+    <subfield code="a">DKDLA</subfield>
+    <subfield code="b">dan</subfield>
+    <subfield code="c">DKDLA</subfield>
+  </datafield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">0765348780</subfield>
+  </datafield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">9780765348784</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(OCoLC)474245614</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">83</subfield>
+    <subfield code="2">z</subfield>
+  </datafield>
+  <datafield tag="100" ind1="1" ind2=" ">
+    <subfield code="a">Erikson, Steven.</subfield>
+  </datafield>
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Gardens of the moon :</subfield>
+    <subfield code="b">book one of the Malazan book of the fallen /</subfield>
+    <subfield code="c">Steven Erikson.</subfield>
+  </datafield>
+  <datafield tag="250" ind1=" " ind2=" ">
+    <subfield code="a">1. Tor mass market edition.</subfield>
+  </datafield>
+  <datafield tag="260" ind1=" " ind2=" ">
+    <subfield code="a">New York :</subfield>
+    <subfield code="b">Tor,</subfield>
+    <subfield code="c">2005.</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">xviii, 666 sider.</subfield>
+  </datafield>
+  <datafield tag="490" ind1="1" ind2=" ">
+    <subfield code="a">A Tom Doherty Associates book</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">Samhørende: Gardens of the moon ; Deadhouse gates ; Memories of ice ; House of chains ; Midnight tides ; The bonehunters ; Reaper&apos;s Gale ; Toll the hounds.</subfield>
+  </datafield>
+  <datafield tag="520" ind1="8" ind2=" ">
+    <subfield code="a">Fantasy-roman.</subfield>
+  </datafield>
+  <datafield tag="534" ind1=" " ind2=" ">
+    <subfield code="p">Originaludgave: 1999.</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="4">
+    <subfield code="a">fantasy.</subfield>
+  </datafield>
+  <datafield tag="830" ind1=" " ind2="2">
+    <subfield code="a">A Tom Doherty Associates book.</subfield>
+  </datafield>
+  <datafield tag="029" ind1="0" ind2=" ">
+    <subfield code="a">DKDLA</subfield>
+    <subfield code="b">36279435</subfield>
+  </datafield>
+  <datafield tag="994" ind1=" " ind2=" ">
+    <subfield code="a">Z0</subfield>
+    <subfield code="b">PMR</subfield>
+  </datafield>
+  <datafield tag="948" ind1=" " ind2=" ">
+    <subfield code="h">NO HOLDINGS IN PMR - 1 OTHER HOLDINGS</subfield>
+  </datafield>
+</record>
