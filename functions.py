@@ -5,8 +5,6 @@ import time
 from pymarc import MARCReader
 from pymarc import Record, Field, Subfield, Indicators
 
-isbn = "9780316005401"
-    
 def ol_search(isbn):
     # search API by ISBN
     params = {
@@ -19,7 +17,7 @@ def ol_search(isbn):
     resp = requests.get(url, params = params)
     if resp.status_code == 200:
         #print(resp.json())
-        print("ol_search(): json response")
+        #print(resp.content)
         return resp.json()
     else:
         print(f'API error: {resp.status_code}')
@@ -28,7 +26,8 @@ def get_book_number(isbn):
     # get Open Library book identifier from search response
     key = json.dumps(ol_search(isbn).get(isbn,{}).get('key'))
     book_number = key.replace("/books/", "").replace('"', '')
-    print(f"book number: {book_number}")
+    #print(f"key: {key}")
+    #print(f"book number: {book_number}")
     return book_number
 
 def get_book_data(isbn):
@@ -41,49 +40,55 @@ def get_book_data(isbn):
             }
     response_book = requests.get(url, params=params)
     book_data = response_book.json()
-    print(response_book.status_code)
+    #print(response_book.status_code)
     #print(f"book data: {book_data}")
     if response_book.status_code  == 200:
         return book_data
     else:
             print(response_book.status_code)
 
-def get_source_records(isbn): 
-    book_data = get_book_data(isbn)
-    source_records = book_data["source_records"]
-    print(source_records)
+def get_source_records(book_data): 
+    source_records = book_data.get("source_records")
+    #print(source_records)
     return source_records
 
-def get_marc_urls(isbn):
+def get_marc_urls(book_data):
     # Use book identifier to find book info and extract links to MARC records
-    source_records = get_source_records(isbn)
+    source_records = get_source_records(book_data)
     marc_urls = []
     for record in source_records:
         if "ia:" in record:
             record = re.sub("^ia:", "", record)
-            marc_urls.append(f'https://archive.org/download/{record}/{record}_marc.xml')
+            marc_urls.append(f'https://archive.org/download/{record}/{record}_meta.mrc')
         elif "marc:" in record:
             record = re.sub("marc:", "", record)
-            marc_urls.append(f'https://openlibrary.org/show-records/{record}?format=xml')
-        print(record)
+            marc_urls.append(f'https://openlibrary.org/show-records/{record}?format=raw')
+    #    print(record)
     # return list of URLs
-    print(f'MARC URLs: {marc_urls}')
-    print("marc urls")
+    #print(f'MARC URLs: {marc_urls}')
     return marc_urls
 
-def download_marc(isbn):
-    marc_urls = get_marc_urls(isbn)
+def download_marc(book_data):
+    marc_urls = get_marc_urls(book_data)
+    file_names = []
     try:
         for link in marc_urls :
             if "openlibrary.org" in link:
-                filename = link.replace("https://openlibrary.org/show-records/", "").replace("/","-").replace(".","-")
+                filename = link.replace("https://openlibrary.org/show-records/", "").replace("/","-").replace(".","-").replace("?format=raw","")
+                filename = "{}.mrc".format(filename)
             elif "archive.org" in link:
-                filename = re.sub("https://archive.org/download/.*/", "", link)
+                filename = re.sub("https://archive.org/download/.*/", "", link).replace("?format=raw","")
+                filename = "{}.mrc".format(filename)
             else:
-                create_marc(isbn)
-        #print(filename)
-        if 'filename' in locals():
-            with open(f"{filename}", "wb") as f:
+                continue
+            file_names.append(filename)
+        print(f"File names\n{file_names}")
+        print(f"URLs\n{marc_urls}")
+                #create_marc(isbn)
+        
+        for file in file_names:
+
+            with open(f"{file}", "wb") as f:
                 record = requests.get(link).content
                 f.write(record)
     except IndexError:
@@ -98,26 +103,9 @@ def get_author(author_id):
     #author_name = requests.get("https://openlibrary.org{author_id}.json", params=params).content["authors"][0]
     print(f"https://openlibrary.org{author_id}.json")
 
-def create_marc(isbn):
-    book_data = get_book_data(isbn)
+def create_marc(book_data):
     title = book_data["title"]
     author = get_author(book_data["authors"][0]["key"])
     #author = book_data["authors"][0]["key"]
     print(title)
     print(author)
-
-get_author("/authors/OL1394250A")
-#print(book_data["subjects"])
-#get_marc_urls(isbn)
-#print("Enter ISBN or filename:")
-#inp = input()
-#if "." in inp:
-#    file = inp
-#    with open(file, "r") as f:
-#        for line in f:
-#            download_marc(line)
-#            time.sleep(5)
-#else:
-#    download_marc(inp)
-# Need to test on a file with multiple lines, add functionality to recognize csv files
-# Editions w/o xml record are downloading the HTML of the MARC record's page.  Need to detect presence of record types.
