@@ -4,6 +4,7 @@ import re
 import time
 from pymarc import MARCReader
 from pymarc import Record, Field, Subfield, Indicators
+import create_245
 
 def ol_search(isbn):
     # search API by ISBN
@@ -103,9 +104,6 @@ def get_author(author_id):
     #author_name = requests.get("https://openlibrary.org{author_id}.json", params=params).content["authors"][0]
     print(f"https://openlibrary.org{author_id}.json")
 
-def create_marc(book_data):
-    title = book_data["title"]
-    author = get_author(book_data["authors"][0]["key"])
-    #author = book_data["authors"][0]["key"]
-    print(title)
-    print(author)
+
+def test_245(book_data):
+    create_245.create_245(get_book_data("0246138815"))
