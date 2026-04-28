@@ -106,5 +106,5 @@ def get_author(author_id):
     print(f"https://openlibrary.org{author_id}.json")
 
 
-def test_245(book_data):
+def test_245():
     create_245.create_245(get_book_data("0246138815"))
