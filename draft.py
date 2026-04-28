@@ -8,9 +8,10 @@ import functions
 
 isbn = "9780316005401"
 book_data = functions.get_book_data(isbn)
+print(book_data)
     
 #functions.get_author("/authors/OL1394250A")
-functions.download_marc(book_data)
+#functions.download_marc(book_data)
 #print(book_data["subjects"])
 #get_marc_urls(isbn)
 #print("Enter ISBN or filename:")

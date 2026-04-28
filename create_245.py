@@ -1,6 +1,7 @@
 from pymarc import MARCReader
 from pymarc import Record, Field, Subfield, Indicators
 import re
+import get_authors
 
 #def check_nonfiling_characters(title):
 #	indef_article = "^[aA] "
@@ -46,6 +47,11 @@ def count_nonfiling_characters(title):
 def create_245(book_data):
 	# title data
 	try:
+		# get OL key of first listed author
+		author_key = book_data['authors'][0]['key']
+	except:
+		pass
+	try:
 		title = book_data["title"]
 	except:
 		title = " "
@@ -57,10 +63,19 @@ def create_245(book_data):
 		subtitle = ""
 
 	# statement of responsibility data
-	try:
-		responsibility = book_data['by_statement']
-	except:
-		responsibility = ""
+#	try:
+#		if book_data['by_statement']:
+#			responsibility = book_data['by_statement']
+#		else:
+#			# get name of first listed author in 'Last name, First name' order
+#			responsibility = get_authors.get_author_name(author_key)['ln_fn']
+#	except Exception:
+#		responsibility = ''
+#		print(Exception)
+
+	responsibility = f"by {get_authors.get_author_name(author_key)['fn_ln']}"
+	print(author_key)
+	print(responsibility)
 
 	# count nonfiling characters in title
 	#nonfiling_characters = check_nonfiling_characters(title)
@@ -79,5 +94,5 @@ def create_245(book_data):
 			])) 
 	
 	print(record['245'])
-	return record
+	#return record
 

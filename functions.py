@@ -37,16 +37,17 @@ def get_book_data(isbn):
     url = f"https://openlibrary.org/books/{book_number}.json"
     params = {
             'format': 'json',
-            'jscmd': 'data'
+            'jscmd': 'data',
+            'User-Agent':'ol2koha/0.1 (seancmcgill@proton.me)'
             }
     response_book = requests.get(url, params=params)
+    print(response_book.status_code)
     book_data = response_book.json()
-    #print(response_book.status_code)
     #print(f"book data: {book_data}")
     if response_book.status_code  == 200:
         return book_data
     else:
-            print(response_book.status_code)
+        print(response_book.status_code)
 
 def get_source_records(book_data): 
     source_records = book_data.get("source_records")
