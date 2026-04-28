@@ -96,15 +96,14 @@ def download_marc(book_data):
     except IndexError:
         print(f"Index error. Is the list empty? {marc_urls}")
 
-def get_author(author_id):
-    params = {
-            'format': 'json',
-            'jscmd': 'data',
-            'User-Agent':'ol2koha/0.1 (seancmcgill@proton.me)'
-            }
-    #author_name = requests.get("https://openlibrary.org{author_id}.json", params=params).content["authors"][0]
-    print(f"https://openlibrary.org{author_id}.json")
-
-
-def test_245():
-    create_245.create_245(get_book_data("0246138815"))
+# remove this block?
+#def get_author(author_id):
+#    params = {
+#            'format': 'json',
+#            'jscmd': 'data',
+#            'User-Agent':'ol2koha/0.1 (seancmcgill@proton.me)'
+#            }
+#    #author_name = requests.get("https://openlibrary.org{author_id}.json", params=params).content["authors"][0]
+#    print(f"https://openlibrary.org{author_id}.json")
+#
+#

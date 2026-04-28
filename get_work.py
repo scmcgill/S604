@@ -20,6 +20,10 @@ def get_work_data(work_id):
 
 def get_description(work_id):
     work_data = get_work_data(work_id)
-    return work_data['description']
+    description = work_data['description']
+    # sometime the description has 'type' and 'value' subfields: check for 'value' subfield and use as description if it exists
+    if 'value' in work_data['description']:
+        description = description['value']
+    return description
 
 #print(get_description('/works/OL5734756W'))
