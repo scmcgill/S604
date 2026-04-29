@@ -50,7 +50,7 @@ def get_book_data(isbn):
         print(response_book.status_code)
 
 def get_source_records(book_data): 
-    source_records = book_data.get("source_records")
+    source_records = book_data["source_records"]
     #print(source_records)
     return source_records
 

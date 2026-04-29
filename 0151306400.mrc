@@ -1,0 +1,1 @@
+00168    a2200061   45001000019000002450077000195200010000961aLem, Stanisław00aFiascobcStanisław Lem ; translated from the Polish by Michael Kandel.asbornik
