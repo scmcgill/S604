@@ -1,5 +1,6 @@
 import pymarc
 from pymarc import  MARCReader, Record, Field, Subfield, Indicators, XMLWriter
+import create_041
 import create_100
 import create_245
 import create_520
@@ -9,6 +10,8 @@ def create_Record(book_data):
 	author_id = book_data['authors'][0]['key']
 	record = Record()
 	
+	field_041 = create_041.create_041(book_data)
+	record.add_field(field_041)
 	field_100 = create_100.create_100(author_id)
 	record.add_field(field_100)
 	field_245 = create_245.create_245(book_data)

@@ -1,1 +1,1 @@
-00168    a2200061   45001000019000002450077000195200010000961aLem, Stanisław00aFiascobcStanisław Lem ; translated from the Polish by Michael Kandel.asbornik
+00198    a2200073   45000410018000001000019000182450077000375200010001141aengapolh/pol1aLem, Stanisław00aFiascobcStanisław Lem ; translated from the Polish by Michael Kandel.asbornik
