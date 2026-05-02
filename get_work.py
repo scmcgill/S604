@@ -5,19 +5,20 @@ import time
 from pymarc import MARCReader
 from pymarc import Record, Field, Subfield, Indicators
 
-# Retrieve json data about author file based on author ID from edition data
+# Get data about a work from Open Library API
 def get_work_data(work_id):
-	url = f"https://openlibrary.org{work_id}.json"
-
+	url = f"https://openlibrary.org/{work_id}.json"
 	params = {
 			'format': 'json',
 			'jscmd': 'data',
-			'User-Agent':'ol2koha/0.1 (seancmcgill@proton.me)'
+			'User-Agent': 'ol2koha/0.1 (seancmcgill@proton.me)'
 			}
-	resp = requests.get(url, params = params)
+	resp = requests.get(url, params=params)
 	if resp.status_code == 200:
-		return resp.json()
+		work_data = resp.json()
+		return work_data
 
+# Get description of work from Open Library work data
 def get_description(work_id):
 	work_data = get_work_data(work_id)
 	if 'description' in work_data:
@@ -28,5 +29,3 @@ def get_description(work_id):
 		return description
 	else:
 		pass
-
-#print(get_description('/works/OL5734756W'))

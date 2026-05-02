@@ -26,7 +26,7 @@ def get_book_number(isbn):
 	return book_number
 
 def get_book_data(isbn):
-	# Get edition data in JSON
+	# Get edition data 
 	book_number = get_book_number(isbn).upper()
 	url = f"https://openlibrary.org/books/{book_number}.json"
 	params = {
@@ -62,7 +62,7 @@ def get_marc_urls(book_data):
 		return marc_urls
 
 def select_record(marc_urls, isbn):
-	# Iterate through list of links to MARC records and select record in order of preference: Internet Archive, LOC. Return empty dictionary if neither source available
+	# Iterate through list of links to MARC records and select record in order of preference: LOC, Internet Archive. Return empty dictionary if neither source available
 	link = ""
 	filename = ""
 	# search for IA link
@@ -70,12 +70,13 @@ def select_record(marc_urls, isbn):
 	# search for LOC link
 	loc = [i for i in marc_urls if "marc_loc" in i]
 
-	if len(ia) > 0:
-		filename = f"{isbn}_internet_archive.mrc"
-		link = ia[0]
-	elif len(loc) > 0:
+	# Select LOC record or Internet Archive record
+	if loc and len(loc) > 0:
 		filename = f"{isbn}_loc.mrc"
 		link = loc[0]
+	elif ia and len(ia) > 0:
+		filename = f"{isbn}_internet_archive.mrc"
+		link = ia[0]
 
 	download_data = {
 		"link" : link,
@@ -88,10 +89,10 @@ def download_marc(link, filename):
 	resp = requests.get(link).content
 	# convert response to pymarc Record()
 	record = Record(resp)
-	# Declare filepaths
+	# Declare filepath
 	directory = "Records"
 	filepath = os.path.join(directory, filename)
-	
+	# Write Pymarc record to file	
 	writer = MARCWriter(open(filepath,'wb'))
 	writer.write(record)
 	writer.close()

@@ -3,6 +3,7 @@ import create_041
 import create_100
 import create_245
 import create_520
+import get_work
 import editions
 import os
 import requests
@@ -15,9 +16,6 @@ def get_work_data(work_id):
 			'User-Agent': 'ol2koha/0.1 (seancmcgill@proton.me)'
 			}
 	resp = requests.get(url, params=params)
-	print(url)
-	print(resp.content)
-	print(resp.status_code)
 	if resp.status_code == 200:
 		work_data = resp.json()
 		return work_data
@@ -25,7 +23,7 @@ def get_work_data(work_id):
 def create_Record(isbn):
 	book_data = editions.get_book_data(isbn)
 	work_id = book_data['works'][0]['key']
-	work_data = get_work_data(work_id)
+	work_data = get_work.get_work_data(work_id)
 	author_id = work_data['authors'][0]['author']['key']
 	record = Record()
 	if 'languages' in book_data:	

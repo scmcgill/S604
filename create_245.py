@@ -1,9 +1,9 @@
-from pymarc import MARCReader
-from pymarc import Record, Field, Subfield, Indicators
+from pymarc import MARCReader, Record, Field, Subfield, Indicators
 import re
 import get_authors
 
 def count_nonfiling_characters(title):
+	# Find number of nonfiling characters (articles, spaces) at the front of the title
 	indef_article = "^[aA] "
 	def_article = "^[tT]he "
 	nonfiling_a = re.search(indef_article, title)
@@ -20,10 +20,10 @@ def create_245(book_data, work_data):
 	try:
 		# get OL key of first listed author
 		author_key = work_data['authors'][0]['author']['key']
-		print(author_key)
 	except:
 		pass
 	try:
+		# get edition title
 		title = book_data["title"]
 	except:
 		title = " "
@@ -34,29 +34,24 @@ def create_245(book_data, work_data):
 	except:
 		subtitle = ""
 
-	# statement of responsibility data
+	# Check for statement of responsibility in edition data
 	if 'by_statement' in book_data:
 			responsibility = book_data['by_statement']
 	else:
-			# get name of first listed author in 'Last name, First name' order
+			# If no statement of responsibility in data, add it
 		responsibility = f"by {get_authors.get_author_name(author_key)['fn_ln']}"
-
-	#print(author_key)
-	#print(responsibility)
-
-	# count nonfiling characters in title
-	#nonfiling_characters = check_nonfiling_characters(title)
 
 # create MARC record and field 245
 	# Add field 245
 	field_245 =	Field(
 			tag = '245',
+			# Write number of nonfiling characters
 			indicators = Indicators('0', count_nonfiling_characters(title)),
 			subfields = [
+				# Add subfields for title, subtitle, statement of responsibility
 				Subfield(code='a', value=title),
 				Subfield(code='b', value=subtitle),
 				Subfield(code='c', value=responsibility)
 			]) 
 	
-	#print(field_245)
 	return field_245
