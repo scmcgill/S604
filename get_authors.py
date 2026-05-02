@@ -43,8 +43,3 @@ def get_author_name(author_id):
         "fn_ln" : fn_ln
             }
     return author_names
-    
-#def get_authors_names(author_id):
-    #author_name = get_author_name(author_id)
-    #print(author_name)
-    #print(len(author_name))

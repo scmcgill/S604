@@ -1,11 +1,13 @@
-import pymarc
 from pymarc import  MARCReader, Record, Field, Subfield, Indicators, XMLWriter
 import create_041
 import create_100
 import create_245
 import create_520
+import editions
+import os
 
-def create_Record(book_data):
+def create_Record(isbn):
+	book_data = editions.get_book_data(isbn)
 	work_id = book_data['works'][0]['key']
 	author_id = book_data['authors'][0]['key']
 	record = Record()
@@ -19,12 +21,15 @@ def create_Record(book_data):
 	field_520 = create_520.create_520(work_id)
 	record.add_field(field_520)
 	
-	if 'isbn_10' in book_data:
-		isbn = book_data['isbn_10'][0]
-		
-	file = f"{isbn}.mrc"
-	with open(file, 'wb') as out:
+	directory = "./Records"
+	filename_marc = f"{isbn}_OL_data.mrc"
+	filepath_marc = os.path.join(directory, filename_marc)
+
+	with open(filepath_marc, 'wb') as out:
 		out.write(record.as_marc21())
-	record_dict = record.as_dict()
-	print(record_dict)
-	return record
+
+	filename_json = f"{isbn}_OL_data.json"
+	filepath_json = os.path.join(directory, filename_json)
+
+	with open(filepath_json, 'w') as out:
+		out.write(record.as_json())

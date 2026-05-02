@@ -1,1 +1,0 @@
-00286    a2200049   450024500400000052001960004000aRed Marsbcby Kim Stanley RobinsonaRed Mars is the first novel of the Mars trilogy, published in 1992. It follows the beginnings of the colonization of Mars, from the arrival of the First Hundred to the First Martian Revolution.

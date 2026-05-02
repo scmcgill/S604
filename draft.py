@@ -1,28 +1,27 @@
-#import requests
-#import json
-#import re
-#import time
-#from pymarc import MARCReader
-#from pymarc import Record, Field, Subfield, Indicators
-import functions
+import time
+import editions
+import create_MARC
 
-isbn = "9780316005401"
-book_data = functions.get_book_data(isbn)
-print(book_data)
+# get list of isbns from file
+with open('isbns.txt', 'r') as f:
+	isbns = [str(line.strip()) for line in f]
+print(isbns)
 
-#functions.get_author("/authors/OL1394250A")
-#functions.download_marc(book_data)
-#print(book_data["subjects"])
-#get_marc_urls(isbn)
-#print("Enter ISBN or filename:")
-#inp = input()
-#if "." in inp:
-#    file = inp
-#    with open(file, "r") as f:
-#        for line in f:
-#            download_marc(line)
-#            time.sleep(5)
-#else:
-#    download_marc(inp)
-# Need to test on a file with multiple lines, add functionality to recognize csv files
-# Editions w/o xml record are downloading the HTML of the MARC record's page.  Need to detect presence of record types.
+def bulk_download_marc(isbns):
+	for isbn in isbns:
+		# get edition data from API by searching isbn
+		book_data = editions.get_book_data(isbn)
+		# Get urls of records for this edition
+		marc_urls = editions.get_marc_urls(book_data)
+		# Select Inernet Archive or LOC records, if available.  Return dictionary with empty values if not.
+		download_data = editions.select_record(marc_urls, isbn)
+		# check if IA or LOC record is available, then download one of them
+		if download_data["link"] != "" and download_data["filename"] != "":
+			editions.download_marc(download_data["link"],download_data["filename"])
+		else:
+			# Create basic MARC record from Open Library data
+			create_MARC.create_Record(isbn)
+		# Pause loop to avoid having requests denied
+		time.sleep(5)
+
+bulk_download_marc(isbns)
