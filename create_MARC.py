@@ -26,10 +26,10 @@ def create_Record(isbn):
 	filepath_marc = os.path.join(directory, filename_marc)
 
 	with open(filepath_marc, 'wb') as out:
-		out.write(record.as_marc21())
+		out.write(record.as_marc())
 
 	filename_json = f"{isbn}_OL_data.json"
 	filepath_json = os.path.join(directory, filename_json)
 
-	with open(filepath_json, 'w') as out:
-		out.write(record.as_json())
+	#with open(filepath_json, 'w') as out:
+		#out.write(record.as_json())

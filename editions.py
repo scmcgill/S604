@@ -1,7 +1,7 @@
 import requests
 import json
 import re
-from pymarc import MARCReader, Record, Field, Subfield, Indicators
+from pymarc import MARCReader, MARCWriter, Record, Field, Subfield, Indicators
 import os
 
 def ol_search(isbn):
@@ -96,16 +96,26 @@ def select_record(marc_urls, isbn):
 	return download_data
 
 def download_marc(link, filename):
-
-	record = requests.get(link).content
+	# Download MARC record
+	resp = requests.get(link).content
+	# convert response to pymarc Record()
+	record = Record(resp)
+	print(record.title)
+	# Declare filepaths
 	directory = "Records"
 	filepath_marc = os.path.join(directory, filename)
-	filepath_json = re.sub(".mrc", ".json", filepath_marc)
+	
+	writer = MARCWriter(open(filepath_marc,'wb'))
+	writer.write(record)
+	writer.close()
 
-	with open(filepath_marc, "wb") as f:
-		f.write(record.as_marc21())
-		f.close()
-
-	with open(filepath_json, "w") as f:
-		f.write(record.as_dict())
-		f.close()
+	#filepath_json = re.sub(".mrc", ".json", filepath_marc)
+	#with open(filepath_marc, "rb") as f:
+		#try:
+			#reader = MARCReader(f)
+			#rec = next(reader).as_dict()
+			#print(rec)
+			#f.write(rec.as_dict())
+			#f.close()
+		#except Exception as e:
+			#print(str(e))
