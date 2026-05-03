@@ -1,9 +1,5 @@
 import requests
 import json
-import re
-import time
-from pymarc import MARCReader
-from pymarc import Record, Field, Subfield, Indicators
 
 # Get data about a work from Open Library API
 def get_work_data(work_id):

@@ -1,6 +1,8 @@
 import time
 import editions
 import create_MARC
+import remove_9XX
+import print_records
 
 # get list of isbns from file
 with open('isbns.txt', 'r') as f:
@@ -28,5 +30,9 @@ def bulk_download_marc(isbns):
 			create_MARC.create_Record(isbn)
 		# Pause loop to avoid having requests denied
 		time.sleep(5)
+	# Remove local data from 9XX fields in MARC records
+	remove_9XX.remove_9XX()
+	# Print records
+	print_records.print_records()
 
 bulk_download_marc(isbns)

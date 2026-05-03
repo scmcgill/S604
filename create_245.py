@@ -42,7 +42,7 @@ def create_245(book_data, work_data):
 		responsibility = f"by {get_authors.get_author_name(author_key)['fn_ln']}"
 
 # create MARC record and field 245
-	# Add field 245
+	# Define field 245
 	field_245 =	Field(
 			tag = '245',
 			# Write number of nonfiling characters

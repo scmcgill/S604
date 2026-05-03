@@ -1,9 +1,5 @@
 import requests
 import json
-import re
-import time
-from pymarc import MARCReader
-from pymarc import Record, Field, Subfield, Indicators
 from nameparser import HumanName
 
 # Retrieve json data about author file based on author ID from edition data

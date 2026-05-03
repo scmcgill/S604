@@ -15,6 +15,7 @@ def ol_search(isbn):
 	url = "https://openlibrary.org/api/books"
 	resp = requests.get(url, params = params)
 	if resp.status_code == 200:
+		# Return search data
 		return resp.json()
 	else:
 		print(f'API error: {resp.status_code}')
@@ -47,18 +48,19 @@ def get_source_records(book_data):
 	return source_records
 
 def get_marc_urls(book_data):
-	# Get a list of URLS that lead to MARC records
+	# Get a list of identifiers for this edition's MARC records
 	if 'source_records' in book_data:
 		source_records = book_data["source_records"]
 		marc_urls = []
 		for record in source_records:
+			# Create download link from source record identifier
 			if "ia:" in record:
 				record = re.sub("^ia:", "", record)
 				marc_urls.append(f'https://archive.org/download/{record}/{record}_meta.mrc')
 			elif "marc:" in record:
 				record = re.sub("marc:", "", record)
 				marc_urls.append(f'https://openlibrary.org/show-records/{record}?format=raw')
-		# return list of URLs
+		# return list of URLs for downloadable records
 		return marc_urls
 
 def select_record(marc_urls, isbn):
@@ -82,6 +84,7 @@ def select_record(marc_urls, isbn):
 		"link" : link,
 		"filename" : filename
 			}
+	# Return dictionary with download link and file name
 	return download_data
 
 def download_marc(link, filename):
