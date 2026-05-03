@@ -1,6 +1,5 @@
 import json
 import time
-import pandas as pd
 from Data import editions
 from MARC import create_MARC, remove_9XX,  print_records
 import os
