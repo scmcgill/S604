@@ -15,7 +15,7 @@ def create_041(book_data):
 	if 'translated_from' in book_data:
 		indic = Indicators('1',' ')
 	else:
-		indic = Indicators('0','')
+		indic = Indicators('0',' ')
 		
     # Define field
 	field_041 = Field(

@@ -16,10 +16,8 @@ def bulk_download_marc(isbns):
 	# Create directory for records if none exists
 	try:
 		os.mkdir("Records")
-		print(f"Directory 'Records' created successfully.")
 	except FileExistsError:
-		print(f"Directory 'Records' already exists.")
-
+		pass
 	for isbn in isbns:
 		print(f"Searching for record for {isbn}")
 		try:
@@ -37,11 +35,11 @@ def bulk_download_marc(isbns):
 					editions.download_marc(download_data["link"],download_data["filename"])
 			else:
 				# Create basic MARC record from Open Library data if MARC download is not available
-				print(f"No LOC or Internet Archive record available. Creating record for {isbn}")
+				print(f"\tNo LOC or Internet Archive record available. Creating record for {isbn}")
 				create_MARC.create_Record(isbn)
 
 		except Exception as e:
-			print(str(e))
+			print(f"\tError: \n\t{str(e)}")
 			trace = traceback.format_exc()
 			print_errors.print_errors(isbn, e, trace)
 				  
@@ -52,4 +50,4 @@ def bulk_download_marc(isbns):
 
 bulk_download_marc(isbns)
 # Print records
-#print_records.print_records()
+print_records.print_records()
