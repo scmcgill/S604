@@ -1,8 +1,6 @@
 import time
-import editions
-import create_MARC
-import remove_9XX
-import print_records
+from Data import editions
+from MARC import create_MARC, remove_9XX,  print_records
 import os
 
 # get list of isbns from file
