@@ -3,6 +3,7 @@ import editions
 import create_MARC
 import remove_9XX
 import print_records
+import os
 
 # get list of isbns from file
 with open('isbns.txt', 'r') as f:
@@ -10,6 +11,14 @@ with open('isbns.txt', 'r') as f:
 
 # Download MARC records of editions relating to ISBNs
 def bulk_download_marc(isbns):
+
+	# Create directory for records if none exists
+	try:
+		os.mkdir("Records")
+		print(f"Directory 'Records' created successfully.")
+	except FileExistsError:
+		print(f"Directory 'Records' already exists.")
+
 	for isbn in isbns:
 		print(f"Searching for record for {isbn}")
 		# get edition data from API by searching isbn
