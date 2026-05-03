@@ -12,7 +12,6 @@ def print_errors(isbn, error, trace):
 		}
 	# Save error data to json file.
 	if not os.path.exists("errors.json"):
-		print("no errors file")
 		with open("errors.json", "w") as f:
 			json.dump(error_data, f)
 	else:
